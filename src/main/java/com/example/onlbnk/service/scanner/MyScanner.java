@@ -1,4 +1,4 @@
-package com.example.onlbnk.model;
+package com.example.onlbnk.service.scanner;
 
 import java.util.Scanner;
 
