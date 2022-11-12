@@ -1,7 +1,9 @@
 package com.example.onlbnk.service.registrationAndVerification;
 
 import com.example.onlbnk.model.User;
+import com.example.onlbnk.repository.UserRepository;
 import com.example.onlbnk.service.scanner.MyScanner;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +12,12 @@ import java.util.List;
 import java.util.Scanner;
 
 @Service
+@Data
 @RequiredArgsConstructor
 public class Registration {
-    public void registration(List<User> registration) {
+    private final UserRepository userRepository ;
+
+    public  void registration(List<User> user) {
         System.out.println("You want to register?");
         System.out.println("If yes click 1 ,otherwise 2");
 
@@ -27,11 +32,11 @@ public class Registration {
                 boolean loginException = false;
                 String login = sc.nextLine();
                 while (!loginException) {
-                    if (registration.isEmpty()) {
+                    if (user.isEmpty()) {
                         loginException = true;
                     } else {
-                        for (User user : registration) {
-                            if (login.equals(user.getUserLogin())) {
+                        for (User user1 : user) {
+                            if (login.equals(user1.getUserLogin())) {
                                 System.out.println("Login busy");
                                 System.out.println("Please try again");
                                 login = sc.nextLine();

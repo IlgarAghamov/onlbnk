@@ -10,4 +10,6 @@ public class OnlbnkApplication {
 		SpringApplication.run(OnlbnkApplication.class, args);
 	}
 
+
+
 }

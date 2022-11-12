@@ -6,6 +6,7 @@ import com.example.onlbnk.repository.UserRepository;
 import com.example.onlbnk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
@@ -24,19 +25,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+       /* SessionFactory sessionFactory= HibernateUtil.getSessionFactory();
+        Session session = (Session) sessionFactory.getCurrentSession();
+        user.setUserId(null);*/
+        return userRepository.saveAndFlush(user);
 
-        boolean b =true;
-        while (b){
-            if (user.getUserLogin().length() < 5 & user.getUserLogin().length() > 10) {
-                System.out.println("Wrong symbols");
-            } else if (user.getUserPassword().length() < 5 & user.getUserPassword().length() > 10) {
-                System.out.println("Wrong symbols");
-            } else {
-                b=false;
-            }
-
-        }
-        return userRepository.save(user);
     }
 
     @Override
