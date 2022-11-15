@@ -1,9 +1,16 @@
 package com.example.onlbnk.service;
 
+import com.example.onlbnk.exception.CardException;
+import com.example.onlbnk.exception.UserLoginException;
 import com.example.onlbnk.model.Card;
 
-public interface CardService {
-    Card createCard(Card card);
+import java.util.Optional;
 
-    boolean deleteCard(Long id);
+public interface CardService {
+
+    boolean createCard(Card card) throws CardException;
+
+    boolean deleteCard(Long id) throws CardException;
+
+    Optional<Card> getCardById(Long id) throws CardException;
 }

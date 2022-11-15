@@ -1,14 +1,16 @@
 package com.example.onlbnk.service;
 
-import com.example.onlbnk.model.User;
+import com.example.onlbnk.controller.dto.CustomUserDTO;
+import com.example.onlbnk.exception.UserLoginException;
+import com.example.onlbnk.model.CustomUser;
 
 public interface UserService {
-    User getUserById(Long id);
+    CustomUser getUserById(Long id) throws UserLoginException;
 
-    User createUser(User user);
+    boolean createUser(CustomUser user) throws UserLoginException;
 
-    boolean deleteUser(Long id);
+    boolean deleteUser(Long id) throws UserLoginException;
 
-    User updateUser(User user);
+    CustomUser updateUser(Long id, CustomUserDTO customUser);
 }
 

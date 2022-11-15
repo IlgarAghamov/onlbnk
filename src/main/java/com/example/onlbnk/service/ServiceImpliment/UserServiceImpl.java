@@ -1,7 +1,9 @@
 package com.example.onlbnk.service.ServiceImpliment;
 
 
-import com.example.onlbnk.model.User;
+import com.example.onlbnk.controller.dto.CustomUserDTO;
+import com.example.onlbnk.exception.UserLoginException;
+import com.example.onlbnk.model.CustomUser;
 import com.example.onlbnk.repository.UserRepository;
 import com.example.onlbnk.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,44 +16,54 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
     @Override
-    public User getUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
+    public CustomUser getUserById(Long id) throws UserLoginException {
+        Optional<CustomUser> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            user.ifPresent(userRepository::delete);
+            return user.orElseGet(CustomUser::new);
+        } else {
+            throw new UserLoginException("This user doesn't exist");
 
+        }
 
-        return user.orElseGet(User::new);
 
     }
 
     @Override
-    public User createUser(User user) {
-       /* SessionFactory sessionFactory= HibernateUtil.getSessionFactory();
-        Session session = (Session) sessionFactory.getCurrentSession();
-        user.setUserId(null);*/
-        return userRepository.saveAndFlush(user);
+    public boolean createUser(CustomUser user) throws UserLoginException {
+        if (userRepository.existsByUserLogin(user.getUserLogin())) {
+            throw new UserLoginException("This login is not available");
+        } else {
+            userRepository.save(user);
+        }
+        return true;
 
     }
 
     @Override
-    public boolean deleteUser(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
+    public boolean deleteUser(Long id) throws UserLoginException {
+        Optional<CustomUser> user = userRepository.findById(id);
+        if (user.isPresent()) {
             user.ifPresent(userRepository::delete);
             return true;
-        }else{
-            return false;}
+        } else {
+            throw new UserLoginException("This user doesn't exist");
+
+        }
 
     }
 
 
     @Override
-    public User updateUser(User user) {
-        userRepository.findById(user.getUserId());
-        return userRepository.save(user);
+    public CustomUser updateUser(Long id, CustomUserDTO user) {
+       CustomUser customUser = userRepository.findById(id).get();
+       customUser.setUserLogin(user.getUserLogin());
+       customUser.setUserPassword(user.getUserPassword());
+
+        return userRepository.save(customUser);
     }
-
-
-
 
 
 }

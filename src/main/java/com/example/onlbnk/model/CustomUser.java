@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user",schema = "public")
-public class User {
+public class CustomUser {
     @Id
     @SequenceGenerator(name = "user_seq",sequenceName = "user_user_id_seq",allocationSize = 0)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "user_seq")

@@ -17,14 +17,14 @@ public class Card {
     private Long cardId;
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
-    private User user;
+    private CustomUser user;
     @Column(name = "carddate")
     private Date cardDate;
     @Column(name = "cardnumber" )
     private String cardNumber;
     @Column(name = "cardtype")
     private String cardType;
-    @Column(name="cardbalans")
+    @Column(name="cardbalanse")
     private Long cardBalance;
 
 

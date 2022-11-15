@@ -1,6 +1,6 @@
 package com.example.onlbnk.service.registrationAndVerification;
 
-import com.example.onlbnk.model.User;
+import com.example.onlbnk.model.CustomUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.Scanner;
 @Service
 @RequiredArgsConstructor
 public class Verification {
-    public void verification(List<User> user) throws ClassNotFoundException {
+    public void verification(List<CustomUser> user) throws ClassNotFoundException {
         Scanner scannerVerification = new Scanner(System.in);
         int m = 3;
         System.out.println("Please enter login");
@@ -18,7 +18,7 @@ public class Verification {
         while (a1 != true) {
             CountOfAttention.countOfAttentions(m);
             String enteredLogin = scannerVerification.nextLine();
-            for (User s1 : user) {
+            for (CustomUser s1 : user) {
                 if (s1.getUserLogin().equals(enteredLogin)) {
                     System.out.println("Login is true ");
                     System.out.println("Please enter password");
