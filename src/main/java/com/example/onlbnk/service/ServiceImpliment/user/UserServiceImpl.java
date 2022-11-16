@@ -25,30 +25,11 @@ public class UserServiceImpl implements UserService {
     public CustomUserResponseDTO getUserById(Long id) throws UserLoginException {
         Optional<CustomUser> user = userRepository.findById(id);
         if (user.isPresent()) {
-            CustomUserResponseDTO customUserResponseDTO = new CustomUserResponseDTO();
-            List<CardResponseDTO> cardResponseDTOList = new ArrayList<>();
-            customUserResponseDTO.setUsername(user.get().getUserLogin());
-            customUserResponseDTO.setId(user.get().getUserId());
-            List<Card> cards = user.get().getCards();
-
-            for (Card card : cards) {
-                CardResponseDTO cr = new CardResponseDTO();
-                cr.setCardType(card.getCardType());
-                cr.setCvc(card.getCardSecret());
-                cr.setYears(card.getCardDate());
-                cardResponseDTOList.add(cr);
-            }
-
-            customUserResponseDTO.setUserCards(cardResponseDTOList);
-
-            return customUserResponseDTO;
+            return getCustomUserResponseDTO(user);
         } else {
             throw new UserLoginException("This user doesn't exist");
         }
-
-
     }
-
     @Override
     public boolean createUser(CustomUserRequestDTO user) throws UserLoginException {
         if (userRepository.existsByUserLogin(user.getUserLogin())) {
@@ -86,6 +67,31 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(customUser);
     }
 
+    @Override
+    public boolean transferMoney(CustomUser customUser, CustomUser customUser1) {
+        return false;
+    }
+
+    private CustomUserResponseDTO getCustomUserResponseDTO(Optional<CustomUser> user) {
+        CustomUserResponseDTO customUserResponseDTO = new CustomUserResponseDTO();
+        List<CardResponseDTO> cardResponseDTOList = new ArrayList<>();
+        customUserResponseDTO.setUsername(user.get().getUserLogin());
+        customUserResponseDTO.setId(user.get().getUserId());
+        List<Card> cards = user.get().getCards();
+
+        for (Card card : cards) {
+            CardResponseDTO cr = new CardResponseDTO();
+            cr.setCardType(card.getCardType());
+            cr.setCvc(card.getCardSecret());
+            cr.setYears(card.getCardDate());
+            cr.setBalance(card.getCardBalance());
+            cardResponseDTOList.add(cr);
+        }
+
+        customUserResponseDTO.setUserCards(cardResponseDTOList);
+
+        return customUserResponseDTO;
+    }
 
 }
 

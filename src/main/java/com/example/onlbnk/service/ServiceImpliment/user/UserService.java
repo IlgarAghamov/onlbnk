@@ -13,5 +13,7 @@ public interface UserService {
     boolean deleteUser(Long id) throws UserLoginException;
 
     CustomUser updateUser(Long id, CustomUserRequestDTO customUser);
+
+    boolean transferMoney(CustomUser customUser,CustomUser customUser1);
 }
 
