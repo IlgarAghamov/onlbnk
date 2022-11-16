@@ -1,12 +1,14 @@
 package com.example.onlbnk.controller;
 
-import com.example.onlbnk.exception.CardException;
+import com.example.onlbnk.dto.card.CardRequestDTO;
+import com.example.onlbnk.exception.card.CardException;
 import com.example.onlbnk.model.Card;
-import com.example.onlbnk.service.CardService;
+import com.example.onlbnk.service.ServiceImpliment.card.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.Optional;
 
 @RestController
@@ -21,12 +23,14 @@ public class CardController {
     }
 
     @PostMapping("/user/{id}/card")
-    public ResponseEntity<Boolean> createCard(@RequestBody Card card) throws CardException {
-        return ResponseEntity.ok(cardService.createCard(card));
+    public ResponseEntity<Boolean> createCard(@PathVariable("id") Long id,
+                                              @RequestBody CardRequestDTO card) throws CardException, ParseException {
+        return ResponseEntity.ok(cardService.createCard(id, card));
 
     }
+
     @DeleteMapping("/card/{id}")
-    public boolean deleteCard(@PathVariable("id")Long id) throws  CardException {
+    public boolean deleteCard(@PathVariable("id") Long id) throws CardException {
 
         return cardService.deleteCard(id);
     }

@@ -15,7 +15,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "card_seq")
     @Column(name = "card_id",unique = true,nullable = false)
     private Long cardId;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="user_id")
     private CustomUser user;
     @Column(name = "carddate")
@@ -26,8 +26,8 @@ public class Card {
     private String cardType;
     @Column(name="cardbalanse")
     private Long cardBalance;
-
-
+    @Column(name = "card_secret")
+    private int cardSecret;
 
 
 }

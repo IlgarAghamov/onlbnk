@@ -23,7 +23,7 @@ public class CustomUser {
     @Column(name="password")
     private String userPassword;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user",cascade =CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Card>cards;
 
 

@@ -1,5 +1,6 @@
-package com.example.onlbnk.exception;
+package com.example.onlbnk.exception.card;
 
+import com.example.onlbnk.exception.card.CardException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

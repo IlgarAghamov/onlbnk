@@ -1,5 +1,6 @@
-package com.example.onlbnk.exception;
+package com.example.onlbnk.exception.user;
 
+import com.example.onlbnk.exception.user.UserLoginException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
