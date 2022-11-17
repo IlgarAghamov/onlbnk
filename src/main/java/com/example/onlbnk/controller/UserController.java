@@ -3,10 +3,12 @@ package com.example.onlbnk.controller;
 
 import com.example.onlbnk.dto.user.CustomUserRequestDTO;
 import com.example.onlbnk.dto.user.CustomUserResponseDTO;
+import com.example.onlbnk.exception.card.CardException;
 import com.example.onlbnk.exception.user.UserLoginException;
 import com.example.onlbnk.model.CustomUser;
 import com.example.onlbnk.service.ServiceImpliment.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,25 +21,35 @@ public class UserController {
     @GetMapping("/user/{id}")
     public CustomUserResponseDTO getUserById(@PathVariable("id") Long id)
             throws UserLoginException {
-
-        return userService.getUserById(id);
+            return userService.getUserById(id);
     }
 
     @PostMapping("/user")
-    public ResponseEntity<Boolean> createUser(@RequestBody CustomUserRequestDTO user) throws  UserLoginException {
-        return ResponseEntity.ok(userService.createUser(user));
+    public ResponseEntity<Boolean> createUser(@RequestBody CustomUserRequestDTO user)
+            throws UserLoginException {
+            return ResponseEntity.ok(userService.createUser(user));
+
     }
 
     @DeleteMapping("/user/{id}")
-    public boolean deleteUser(@PathVariable("id")Long id) throws UserLoginException {
+    public boolean deleteUser(@PathVariable("id") Long id)
+            throws UserLoginException {
+            return userService.deleteUser(id);
 
-        return userService.deleteUser(id);
     }
 
     @PutMapping("/user/{id}")
-    public CustomUser updateUser(@PathVariable Long id, @RequestBody CustomUserRequestDTO user){
+    public CustomUser updateUser(@PathVariable Long id, @RequestBody CustomUserRequestDTO user) {
 
         return userService.updateUser(id, user);
 
     }
+
+   /* @PostMapping("/transfer")
+    public ResponseEntity<Boolean> transfer(@PageableDefault Long senderId, Long recipientId,
+                                            Long senderCardId, Long recipientCardId, float amount) throws CardException {
+            return ResponseEntity.ok(userService.transferMoney( senderId,  recipientId,
+                 senderCardId,  recipientCardId,  amount));
+    }*/
+
 }

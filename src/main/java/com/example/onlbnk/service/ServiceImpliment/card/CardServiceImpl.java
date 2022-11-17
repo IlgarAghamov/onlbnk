@@ -18,7 +18,9 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class CardServiceImpl implements CardService {
+
     private final CardRepository cardRepository;
+
     private final UserRepository userRepository;
 
     private final Random random = new Random();
@@ -46,7 +48,6 @@ public class CardServiceImpl implements CardService {
             return true;
         } else {
             throw new CardException("This user doesn't exist");
-
         }
     }
 
@@ -58,14 +59,11 @@ public class CardServiceImpl implements CardService {
             return Optional.of(card.orElseGet(Card::new));
         } else {
             throw new CardException("This card doesn't exist");
-
         }
-
     }
 
     private Date createCardDate(int years) throws ParseException {
         Calendar calendar = Calendar.getInstance();
-
         calendar.setTime(new Date());
         calendar.add(Calendar.YEAR, years);
         return calendar.getTime();
@@ -76,12 +74,10 @@ public class CardServiceImpl implements CardService {
         for (int i = 0; i < 4; i++) {
             result = result.concat(String.valueOf(generateRandom4Digits(9000,1000)));
         }
-
         return result;
     }
 
-    private int generateRandom4Digits(int max ,int min) {
-        return random.nextInt(max) + min;
+    private int generateRandom4Digits(int max ,int min) {return random.nextInt(max) + min;
     }
 
     }
