@@ -24,7 +24,7 @@ public class Card {
     private String cardNumber;
     @Column(name = "cardtype")
     private String cardType;
-    @Column(name="cardbalance")
+    @Column(name="cardbalanse")
     private float cardBalance;
     @Column(name = "card_secret")
     private int cardSecret;

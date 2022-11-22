@@ -11,6 +11,7 @@ import com.example.onlbnk.model.CustomUser;
 import com.example.onlbnk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +25,22 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    public List<CustomUserResponseDTO> getUsers() {
+        List<CustomUserResponseDTO> response = new ArrayList<>();
+        List<CustomUser> users = userRepository.findAll();
+
+        for (CustomUser user : users) {
+            response.add(getCustomUserResponseDTO(user));
+        }
+
+        return response;
+    }
+
+    @Override
     public CustomUserResponseDTO getUserById(Long id) throws UserLoginException {
         Optional<CustomUser> user = userRepository.findById(id);
         if (user.isPresent()) {
-            return getCustomUserResponseDTO(user);
+            return getCustomUserResponseDTO(user.get());
         } else {
             throw new UserLoginException("This user doesn't exist");
         }
@@ -68,21 +81,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean transferMoney(Long senderId, Long recipientId,
                                  Long senderCardId, Long recipientCardId, float amount)
             throws CardException {
         Optional<CustomUser> senderUser = userRepository.findById(senderId);
         Optional<CustomUser> recipientUser = userRepository.findById(recipientId);
 
-        ArrayList<Card> senderCards = (ArrayList<Card>) senderUser.get().getCards();
-        ArrayList<Card> recipientCards = (ArrayList<Card>) recipientUser.get().getCards();
+        List<Card> senderCards = senderUser.get().getCards();
+        List<Card> recipientCards = recipientUser.get().getCards();
 
         boolean senderIsOkay = checkCardOwner(senderCards, senderCardId);
         boolean recipientIsOkay = checkCardOwner(recipientCards, recipientCardId);
 
         if (senderIsOkay && recipientIsOkay) {
             Card senderCard = getCardFromList(senderCards, senderCardId);
-            Card recipientCard = getCardFromList(recipientCards, senderCardId);
+            Card recipientCard = getCardFromList(recipientCards, recipientCardId);
 
             float senderBalance = senderCard.getCardBalance();
             float recipientBalance = recipientCard.getCardBalance();
@@ -105,12 +119,12 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    private CustomUserResponseDTO getCustomUserResponseDTO(Optional<CustomUser> user) {
+    private CustomUserResponseDTO getCustomUserResponseDTO(CustomUser user) {
         CustomUserResponseDTO customUserResponseDTO = new CustomUserResponseDTO();
         List<CardResponseDTO> cardResponseDTOList = new ArrayList<>();
-        customUserResponseDTO.setUsername(user.get().getUserLogin());
-        customUserResponseDTO.setId(user.get().getUserId());
-        List<Card> cards = user.get().getCards();
+        customUserResponseDTO.setUsername(user.getUserLogin());
+        customUserResponseDTO.setId(user.getUserId());
+        List<Card> cards = user.getCards();
 
         for (Card card : cards) {
             CardResponseDTO cr = new CardResponseDTO();

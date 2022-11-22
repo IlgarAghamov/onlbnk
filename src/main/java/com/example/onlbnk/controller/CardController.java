@@ -2,6 +2,7 @@ package com.example.onlbnk.controller;
 
 import com.example.onlbnk.dto.card.CardRequestDTO;
 import com.example.onlbnk.exception.card.CardException;
+import com.example.onlbnk.exception.user.UserLoginException;
 import com.example.onlbnk.model.Card;
 import com.example.onlbnk.service.ServiceImpliment.card.CardService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class CardController {
 
     @PostMapping("/user/{id}/card")
     public ResponseEntity<Boolean> createCard(@PathVariable("id") Long id,
-                                              @RequestBody CardRequestDTO card) throws CardException, ParseException {
+                                              @RequestBody CardRequestDTO card) throws CardException, UserLoginException {
         return ResponseEntity.ok(cardService.createCard(id, card));
 
     }

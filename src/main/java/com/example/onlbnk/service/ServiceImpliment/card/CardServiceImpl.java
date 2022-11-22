@@ -2,6 +2,7 @@ package com.example.onlbnk.service.ServiceImpliment.card;
 
 import com.example.onlbnk.dto.card.CardRequestDTO;
 import com.example.onlbnk.exception.card.CardException;
+import com.example.onlbnk.exception.user.UserLoginException;
 import com.example.onlbnk.model.Card;
 import com.example.onlbnk.model.CustomUser;
 import com.example.onlbnk.repository.CardRepository;
@@ -26,7 +27,7 @@ public class CardServiceImpl implements CardService {
     private final Random random = new Random();
 
     @Override
-    public boolean createCard(Long userId, CardRequestDTO cardRequestDTO) throws CardException, ParseException {
+    public boolean createCard(Long userId, CardRequestDTO cardRequestDTO)  {
         CustomUser user = userRepository.findById(userId).get();
         Card card = new Card();
         card.setCardDate(createCardDate(cardRequestDTO.getYears()));
@@ -34,9 +35,8 @@ public class CardServiceImpl implements CardService {
         card.setUser(user);
         card.setCardType(cardRequestDTO.getCardType());
         card.setCardBalance(0L);
-        card.setCardSecret(generateRandom4Digits(999,100));
-
-        cardRepository.save(card);
+        card.setCardSecret(generateRandom4Digits(900,100));
+         cardRepository.save(card);
         return true;
     }
 
@@ -62,7 +62,7 @@ public class CardServiceImpl implements CardService {
         }
     }
 
-    private Date createCardDate(int years) throws ParseException {
+    private Date createCardDate(int years)  {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.YEAR, years);

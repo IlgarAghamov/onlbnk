@@ -6,7 +6,11 @@ import com.example.onlbnk.exception.card.CardException;
 import com.example.onlbnk.exception.user.UserLoginException;
 import com.example.onlbnk.model.CustomUser;
 
+import java.util.List;
+
 public interface UserService {
+    List<CustomUserResponseDTO> getUsers();
+
     CustomUserResponseDTO getUserById(Long id) throws UserLoginException;
 
     boolean createUser(CustomUserRequestDTO user) throws UserLoginException;
