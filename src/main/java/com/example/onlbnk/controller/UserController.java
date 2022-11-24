@@ -3,6 +3,7 @@ package com.example.onlbnk.controller;
 
 import com.example.onlbnk.dto.user.CustomUserRequestDTO;
 import com.example.onlbnk.dto.user.CustomUserResponseDTO;
+import com.example.onlbnk.dto.user.ReplenishTheBalanceDTO;
 import com.example.onlbnk.dto.user.TransferDTO;
 import com.example.onlbnk.exception.card.CardException;
 import com.example.onlbnk.exception.user.UserLoginException;
@@ -64,4 +65,9 @@ public class UserController {
                 dto.getSenderCardId(), dto.getRecipientCardId(), dto.getAmount()));
     }
 
+    @PutMapping("/replenishTheBalance")
+    public ResponseEntity<Boolean> replenishTheBalance(@RequestBody ReplenishTheBalanceDTO dto) throws CardException {
+        return ResponseEntity.ok(userService.replenishTheBalance(
+                dto.getCardId(),dto.getAmount()));
+    }
 }

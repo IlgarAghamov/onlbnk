@@ -14,8 +14,8 @@ public class CardResponseDTO {
 
     private String cardType;
     @JsonFormat(pattern = "MM/yy")
-    private Date years;
-    private int cvc;
-    private float balance;
+    private Date cardDate;
+    private int cardSecret;
+    private float cardBalance;
 
 }

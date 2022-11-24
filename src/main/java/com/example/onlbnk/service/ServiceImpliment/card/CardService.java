@@ -13,4 +13,6 @@ public interface CardService {
     boolean deleteCard(Long id) throws CardException;
 
     Optional<Card> getCardById(Long id) throws CardException;
+
+
 }

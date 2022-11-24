@@ -2,15 +2,12 @@ package com.example.onlbnk.service.ServiceImpliment.card;
 
 import com.example.onlbnk.dto.card.CardRequestDTO;
 import com.example.onlbnk.exception.card.CardException;
-import com.example.onlbnk.exception.user.UserLoginException;
 import com.example.onlbnk.model.Card;
 import com.example.onlbnk.model.CustomUser;
 import com.example.onlbnk.repository.CardRepository;
 import com.example.onlbnk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
@@ -79,6 +76,8 @@ public class CardServiceImpl implements CardService {
 
     private int generateRandom4Digits(int max ,int min) {return random.nextInt(max) + min;
     }
+
+
 
     }
 

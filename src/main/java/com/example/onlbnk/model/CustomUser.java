@@ -18,13 +18,13 @@ public class CustomUser {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "user_seq")
     @Column(name = "user_id",unique = true,nullable = false)
     private Long userId;
-    @Column(name ="login")
+    @Column(name ="user_login")
     private String userLogin;
-    @Column(name="password")
+    @Column(name="user_password")
     private String userPassword;
 
     @OneToMany(mappedBy = "user")
-    private List<Card>cards;
+    private List<Card> cards;
 
 
 }

@@ -20,5 +20,8 @@ public interface UserService {
     CustomUser updateUser(Long id, CustomUserRequestDTO customUser);
 
     boolean transferMoney(Long senderId, Long recipientId, Long senderCardId, Long recipientCardId, float amount) throws CardException;
+
+    boolean replenishTheBalance(Long cardId, float amount)
+                throws CardException;
 }
 

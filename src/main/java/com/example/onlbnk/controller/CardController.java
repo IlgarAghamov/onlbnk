@@ -8,8 +8,6 @@ import com.example.onlbnk.service.ServiceImpliment.card.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.text.ParseException;
 import java.util.Optional;
 
 @RestController
@@ -35,5 +33,7 @@ public class CardController {
 
         return cardService.deleteCard(id);
     }
+
+
 }
 

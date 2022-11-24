@@ -6,8 +6,11 @@ import com.example.onlbnk.dto.user.CustomUserRequestDTO;
 import com.example.onlbnk.dto.user.CustomUserResponseDTO;
 import com.example.onlbnk.exception.card.CardException;
 import com.example.onlbnk.exception.user.UserLoginException;
+import com.example.onlbnk.mapper.CardMapper;
+import com.example.onlbnk.mapper.UserMapper;
 import com.example.onlbnk.model.Card;
 import com.example.onlbnk.model.CustomUser;
+import com.example.onlbnk.repository.CardRepository;
 import com.example.onlbnk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,13 +27,16 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final CardRepository cardRepository;
+
     @Override
     public List<CustomUserResponseDTO> getUsers() {
         List<CustomUserResponseDTO> response = new ArrayList<>();
         List<CustomUser> users = userRepository.findAll();
 
         for (CustomUser user : users) {
-            response.add(getCustomUserResponseDTO(user));
+           response.add(UserMapper.INSTANCE.toDTO(user));
+         //   response.add(getCustomUserResponseDTO(user));
         }
 
         return response;
@@ -81,6 +87,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean replenishTheBalance(Long cardId, float amount)
+            throws CardException {
+        Optional<Card> card =cardRepository.findById(cardId);
+
+        if (amount != 0) {
+            card.get().setCardBalance(card.get().getCardBalance() + amount);
+            cardRepository.save(card.get());
+            return true;
+        } else {
+            throw new CardException("Not enough funds");
+        }
+
+    }
+
+    @Override
     @Transactional
     public boolean transferMoney(Long senderId, Long recipientId,
                                  Long senderCardId, Long recipientCardId, float amount)
@@ -122,20 +143,21 @@ public class UserServiceImpl implements UserService {
     private CustomUserResponseDTO getCustomUserResponseDTO(CustomUser user) {
         CustomUserResponseDTO customUserResponseDTO = new CustomUserResponseDTO();
         List<CardResponseDTO> cardResponseDTOList = new ArrayList<>();
-        customUserResponseDTO.setUsername(user.getUserLogin());
-        customUserResponseDTO.setId(user.getUserId());
+        customUserResponseDTO.setUserLogin(user.getUserLogin());
+        customUserResponseDTO.setUserId(user.getUserId());
         List<Card> cards = user.getCards();
 
         for (Card card : cards) {
+
             CardResponseDTO cr = new CardResponseDTO();
             cr.setCardType(card.getCardType());
-            cr.setCvc(card.getCardSecret());
-            cr.setYears(card.getCardDate());
-            cr.setBalance(card.getCardBalance());
+            cr.setCardSecret(card.getCardSecret());
+            cr.setCardDate(card.getCardDate());
+            cr.setCardBalance(card.getCardBalance());
             cardResponseDTOList.add(cr);
         }
 
-        customUserResponseDTO.setUserCards(cardResponseDTOList);
+       customUserResponseDTO.setCards(cardResponseDTOList);
 
         return customUserResponseDTO;
     }
@@ -147,6 +169,5 @@ public class UserServiceImpl implements UserService {
     private Card getCardFromList(List<Card> userCards, Long cardId) {
         return userCards.stream().filter(p -> p.getCardId().equals(cardId)).collect(Collectors.toList()).get(0);
     }
-
 }
 

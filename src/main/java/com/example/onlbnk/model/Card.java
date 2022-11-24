@@ -18,13 +18,13 @@ public class Card {
     @ManyToOne
     @JoinColumn(name="user_id")
     private CustomUser user;
-    @Column(name = "carddate")
+    @Column(name = "card_date")
     private Date cardDate;
-    @Column(name = "cardnumber" )
+    @Column(name = "card_number")
     private String cardNumber;
-    @Column(name = "cardtype")
+    @Column(name = "card_type")
     private String cardType;
-    @Column(name="cardbalanse")
+    @Column(name="card_balance")
     private float cardBalance;
     @Column(name = "card_secret")
     private int cardSecret;
