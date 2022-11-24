@@ -1,7 +1,8 @@
-package com.example.onlbnk.mapper;
+package com.example.onlbnk.mapper.user;
 
 import com.example.onlbnk.dto.card.CardResponseDTO;
 import com.example.onlbnk.dto.user.CustomUserResponseDTO;
+import com.example.onlbnk.mapper.card.CardMapper;
 import com.example.onlbnk.model.Card;
 import com.example.onlbnk.model.CustomUser;
 import org.mapstruct.Mapper;

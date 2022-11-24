@@ -11,4 +11,5 @@ public class CardRequestDTO {
 
     private int years;
     private String cardType;
+
 }

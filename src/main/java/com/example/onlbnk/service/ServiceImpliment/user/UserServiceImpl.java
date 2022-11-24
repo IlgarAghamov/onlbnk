@@ -6,8 +6,8 @@ import com.example.onlbnk.dto.user.CustomUserRequestDTO;
 import com.example.onlbnk.dto.user.CustomUserResponseDTO;
 import com.example.onlbnk.exception.card.CardException;
 import com.example.onlbnk.exception.user.UserLoginException;
-import com.example.onlbnk.mapper.CardMapper;
-import com.example.onlbnk.mapper.UserMapper;
+import com.example.onlbnk.mapper.user.UserMapper;
+import com.example.onlbnk.mapper.user.UserMapperRequest;
 import com.example.onlbnk.model.Card;
 import com.example.onlbnk.model.CustomUser;
 import com.example.onlbnk.repository.CardRepository;
@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
             user1.setUserLogin(user.getUserLogin());
             user1.setUserPassword(user.getUserPassword());
             userRepository.save(user1);
+
         }
         return true;
 
