@@ -17,7 +17,6 @@ import java.util.List;
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mapping(target = "userLogin", source = "userLogin")
     @Mapping(target = "cards", source = "cards", qualifiedByName = "convertCards")
     CustomUserResponseDTO toDTO(CustomUser customUser);
 
